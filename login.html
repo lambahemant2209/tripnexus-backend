@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripNexus – Login | Next-Gen AI Travel Companion</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-page">
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo" onclick="window.location.href='index.html#home'">
+        <div class="nav-logo-icon">T</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-title">TripNexus</span>
+          <span class="nav-logo-sub">Next-Gen AI Travel Companion</span>
+        </div>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#hotels">Hotels</a>
+        <a href="index.html#guides">Guides</a>
+        <a href="index.html#vehicles">Vehicles</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Auth content -->
+  <main class="auth-main">
+    <div class="auth-card">
+      <h1 class="auth-title">Welcome back 👋</h1>
+      <p class="auth-subtitle">
+        Login to access your saved bookings, preferences and trips on TripNexus.
+      </p>
+
+      <form class="auth-form" id="loginForm">
+        <label>
+          Email
+          <input type="email" id="loginEmail" placeholder="you@example.com" required />
+        </label>
+
+        <label>
+          Password
+          <input type="password" id="loginPassword" placeholder="••••••••" required />
+        </label>
+
+        <div class="auth-extra-row">
+          <label class="auth-remember">
+            <input type="checkbox" id="rememberMe" />
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="auth-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit">
+          Login
+        </button>
+      </form>
+
+      <p class="auth-bottom-text">
+        New to TripNexus?
+        <a href="register.html" class="auth-link">Create an account</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 TripNexus • Minor Project • Dev Bhoomi Uttarakhand University</p>
+  </footer>
+
+  <script>
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    navToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    navLinks.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        navLinks.classList.remove("open");
+      }
+    });
+
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || "Login failed");
+          return;
+        }
+
+        // Save token and username in browser
+        localStorage.setItem("tripnexus_token", data.token);
+        localStorage.setItem("tripnexus_user_name", data.user.name);
+
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong while logging in.");
+      }
+    });
+  </script>
+</body>
+</html>

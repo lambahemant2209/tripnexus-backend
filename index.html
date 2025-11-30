@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripNexus: Next-Gen AI Travel Companion</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo" onclick="window.location.hash='#home'">
+        <div class="nav-logo-icon">T</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-title">TripNexus</span>
+          <span class="nav-logo-sub">Next-Gen AI Travel Companion</span>
+        </div>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#hotels">Hotels</a>
+        <a href="#guides">Guides</a>
+        <a href="#vehicles">Vehicles</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main>
+    <!-- Hero / Home -->
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Plan your stay, food & travel in one place.</h1>
+          <p>
+            TripNexus: Next-Gen AI Travel Companion helps you book hotels,
+            personalize meals with chefs, hire local guides, and rent vehicles –
+            all from a single, easy app.
+          </p>
+          <div class="hero-buttons">
+            <a href="#hotels" class="btn btn-primary">Find hotels</a>
+            <a href="#guides" class="btn btn-outline">Explore guides</a>
+          </div>
+          <div class="hero-pills">
+            <span>🎯 One app, all travel</span>
+            <span>🍱 Personalized food</span>
+            <span>🧭 Local experts</span>
+            <span>🚗 Easy rentals</span>
+          </div>
+        </div>
+        <div class="hero-illustration">
+          <div class="hero-badge">
+            <span class="hero-badge-main">98%</span>
+            <span class="hero-badge-sub">Happy travellers</span>
+          </div>
+          <div class="hero-card">
+            <span class="hero-card-title">Today’s plan</span>
+            <ul>
+              <li>🏨 Check-in at Heritage Palace</li>
+              <li>🍽️ Dinner by Chef Asha</li>
+              <li>🧭 Evening heritage walk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hotels Section -->
+    <section id="hotels" class="section">
+      <div class="section-header">
+        <h2>Hotels</h2>
+        <div class="section-filter">
+          <input
+            type="text"
+            id="hotelFilter"
+            placeholder="Search by location (Jaipur, Manali, ...)"
+          />
+        </div>
+      </div>
+      <div id="hotelList" class="card-grid">
+        <!-- JS will inject hotel cards here -->
+      </div>
+    </section>
+
+    <!-- Guides Section -->
+    <section id="guides" class="section section-gray">
+      <div class="section-header">
+        <h2>Local Guides</h2>
+      </div>
+      <p class="section-subtitle">
+        Book verified guides for history walks, food tours and offbeat experiences.
+      </p>
+
+      <!-- Map + "Use my location" -->
+      <div class="map-wrapper">
+        <button id="locateBtn" class="btn btn-primary map-btn">
+          Use my location
+        </button>
+        <div id="map" class="map-container"></div>
+      </div>
+
+      <div id="guideList" class="card-grid">
+        <!-- JS will inject guide cards here -->
+      </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section id="vehicles" class="section">
+      <div class="section-header">
+        <h2>Vehicle Rentals</h2>
+      </div>
+      <p class="section-subtitle">
+        Pick the right ride for your trip – from bikes to SUVs.
+      </p>
+      <div id="vehicleList" class="card-grid">
+        <!-- JS will inject vehicle cards here -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile bottom nav -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button data-target="#home">
+      <span class="bottom-nav-icon">🏠</span>
+      <span class="bottom-nav-label">Home</span>
+    </button>
+    <button data-target="#hotels">
+      <span class="bottom-nav-icon">🏨</span>
+      <span class="bottom-nav-label">Hotels</span>
+    </button>
+    <button data-target="#guides">
+      <span class="bottom-nav-icon">🧭</span>
+      <span class="bottom-nav-label">Guides</span>
+    </button>
+    <button data-target="#vehicles">
+      <span class="bottom-nav-icon">🚗</span>
+      <span class="bottom-nav-label">Vehicles</span>
+    </button>
+  </nav>
+
+  <!-- Booking modal -->
+  <div class="modal-backdrop" id="bookingModalBackdrop">
+    <div class="modal" id="bookingModal">
+      <h3 id="modalTitle">Booking</h3>
+      <form id="bookingForm">
+        <label>
+          Your name
+          <input type="text" id="bookingName" required />
+        </label>
+        <label>
+          Check-in date
+          <input type="date" id="bookingDate" required />
+        </label>
+        <label>
+          Nights
+          <input type="number" id="bookingNights" min="1" value="1" required />
+        </label>
+        <label>
+          Special requests (food / guide / vehicle)
+          <textarea id="bookingNotes" rows="3"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="modalCancel">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Confirm (Mock)
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 TripNexus • Minor Project • Dev Bhoomi Uttarakhand University</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <!-- Replace YOUR_API_KEY_HERE with your real Google Maps API key -->
+  <script
+    async
+    defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&callback=initMap">
+  </script>
+</body>
+</html>

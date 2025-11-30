@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TripNexus – Register | Next-Gen AI Travel Companion</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="auth-page">
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo" onclick="window.location.href='index.html#home'">
+        <div class="nav-logo-icon">T</div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-title">TripNexus</span>
+          <span class="nav-logo-sub">Next-Gen AI Travel Companion</span>
+        </div>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        ☰
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#hotels">Hotels</a>
+        <a href="index.html#guides">Guides</a>
+        <a href="index.html#vehicles">Vehicles</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Auth content -->
+  <main class="auth-main">
+    <div class="auth-card">
+      <h1 class="auth-title">Create your account ✨</h1>
+      <p class="auth-subtitle">
+        Sign up to save trips, manage bookings and sync your preferences with TripNexus.
+      </p>
+
+      <form class="auth-form" id="registerForm">
+        <label>
+          Full name
+          <input type="text" id="regName" placeholder="Enter your name" required />
+        </label>
+
+        <label>
+          Email
+          <input type="email" id="regEmail" placeholder="you@example.com" required />
+        </label>
+
+        <label>
+          Password
+          <input type="password" id="regPassword" placeholder="Create a password" required />
+        </label>
+
+        <label>
+          Confirm password
+          <input type="password" id="regConfirm" placeholder="Repeat your password" required />
+        </label>
+
+        <button type="submit" class="btn btn-primary auth-submit">
+          Create account
+        </button>
+      </form>
+
+      <p class="auth-bottom-text">
+        Already have an account?
+        <a href="login.html" class="auth-link">Login instead</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 TripNexus • Minor Project • Dev Bhoomi Uttarakhand University</p>
+  </footer>
+
+  <script>
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    navToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    navLinks.addEventListener("click", (e) => {
+      if (e.target.tagName === "A") {
+        navLinks.classList.remove("open");
+      }
+    });
+
+    const registerForm = document.getElementById("registerForm");
+
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("regName").value;
+      const email = document.getElementById("regEmail").value;
+      const pass = document.getElementById("regPassword").value;
+      const confirm = document.getElementById("regConfirm").value;
+
+      if (pass !== confirm) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password: pass }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || "Registration failed");
+          return;
+        }
+
+        alert("Registration successful! Please login.");
+        window.location.href = "login.html";
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong while registering.");
+      }
+    });
+  </script>
+</body>
+</html>
