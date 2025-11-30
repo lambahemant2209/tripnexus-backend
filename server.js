@@ -5,7 +5,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const User = require("./models/user");
+const User = require("./models/User");
 
 dotenv.config();
 
@@ -116,3 +116,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`🚀 TripNexus backend running on http://localhost:${PORT}`)
 );
+
