@@ -103,7 +103,7 @@ head>
       }
 
       try {
-        const res = await fetch("https://tripnexus-backend.onrender.com", {
+        const res = await fetch("https://tripnexus-backend.onrender.com/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password: pass }),
@@ -126,4 +126,5 @@ head>
   </script>
 </body>
 </html>
+
 
